@@ -256,7 +256,13 @@ require('lazy').setup({
 
   -- enables the linter
   {
-    "mfussenegger/nvim-lint",
+    -- "mfussenegger/nvim-lint",
+    'dense-analysis/ale',
+    config = function()
+      vim.keymap.set('n', '<C-j>', '<Plug>(ale_next_wrap)')
+      vim.g["ale_set_quickfix"] = 1
+      vim.g["ale_linters"] = {javascript = {"eslint"}}
+    end,
   },
 
   {
@@ -305,6 +311,8 @@ require('lazy').setup({
       require("bufferline").setup()
       vim.keymap.set('n',  "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
       vim.keymap.set('n',  "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+      vim.keymap.set('n', "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", { desc = "Toggle pin" })
+      vim.keymap.set('n', '<leader>1', '<Cmd>BufferLineGoToBuffer 1<CR>', { desc = "Go to first buffer" })
     end,
   },
 
