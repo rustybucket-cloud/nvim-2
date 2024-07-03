@@ -312,19 +312,75 @@ require('lazy').setup({
   },
 
   -- copilot
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   build = ":Copilot auth",
+  --   opts = {
+  --     suggestion = { enabled = true },
+  --     panel = { enabled = false },
+  --     filetypes = {
+  --       markdown = true,
+  --       help = true,
+  --     },
+  --   },
+  -- }
+  { "nvim-neotest/nvim-nio" },
+
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    build = ":Copilot auth",
-    opts = {
-      suggestion = { enabled = true },
-      panel = { enabled = false },
-      filetypes = {
-        markdown = true,
-        help = true,
-      },
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      'nvim-neotest/neotest-jest',
     },
-  }
+    opts = {
+      adapters = { 'neotest-jest' }
+    },
+  },
+
+  {
+    'voldikss/vim-floaterm',
+    config = function()
+      vim.keymap.set('n', '<C-l>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true, silent = true })
+      vim.keymap.set('t', '<C-l>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true, silent = true })
+    end
+  },
+
+  {
+    'andythigpen/nvim-coverage',
+    dependencies = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function()
+      require("coverage").setup({
+        commands = true, -- create commands
+        highlights = {
+          -- customize highlight groups created by the plugin
+          covered = { fg = "#C3E88D" },   -- supports style, fg, bg, sp (see :h highlight-gui)
+          uncovered = { fg = "#F07178" },
+        },
+        signs = {
+          -- use your own highlight groups or text markers
+          covered = { hl = "CoverageCovered", text = "▎" },
+          uncovered = { hl = "CoverageUncovered", text = "▎" },
+        },
+        summary = {
+          -- customize the summary pop-up
+          min_coverage = 80.0,      -- minimum coverage threshold (used for highlighting)
+        },
+        lang = {
+          -- customize language specific settings
+        },
+      })
+    end,
+  },
+
+  {
+    'github/copilot.vim'
+  },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
